@@ -181,23 +181,25 @@ const talles = ["s", "m", "l", "xl"];
 function agregarACarrito(producto) {
   carrito.push(producto);
 }
-function mostrarCarrito() {
+
+mostrarCarrito = () => {
   let msjCarrito = "Carrito de compras: \n";
-  carrito.forEach((producto) => {
-    msjCarrito += `- ${producto.tipo} \n $${producto.precio} } `;
+  carrito.forEach((el) => {
+    msjCarrito += `- ${el.tipo} \n`;
+    msjCarrito += `total --------------$ ${el.precio}`;
+    alert(msjCarrito);
   });
-  alert(msjCarrito);
-}
+};
 
 const verRemeras = () => {
   let mensaje = "Lista de producto: \n";
   Productos.forEach((el) => {
     if (el.categoria === "remeras") {
-      mensaje = mensaje + `${el.id}-${el.tipo}  $${el.precio} \n`;
+      mensaje += `${el.id}-${el.tipo}  $${el.precio} \n`;
     }
   });
 
-  const opcion = parseInt(prompt(mensaje)); // id del objeto a guardar en el carrito
+  const opcion = parseInt(prompt(mensaje)); // id del objeto a guardar en el carrito esto no se porque me itera el numero de veces del id
 
   const productoElegido = Productos.find((producto) => producto.id === opcion);
   agregarACarrito(productoElegido);
@@ -211,9 +213,10 @@ const verBusos = () => {
       mensaje += `${el.id}-${el.tipo} $${el.precio} \n`;
     } // crea la lista de productos recorriendo el array filtrado
   });
+  const opcionElegida = parseInt(prompt(mensaje));
   const productoElegido = Productos.find(
     (producto) => {
-      return producto.id === parseInt(prompt(mensaje));
+      producto.id === opcionElegida;
     } //esto muestra las  opciones y recibe un respuesta en numero
   );
   agregarACarrito(productoElegido);
@@ -223,13 +226,15 @@ const verCamperas = () => {
   let mensaje = "Lista de producto: \n";
   Productos.forEach((el) => {
     if (el.categoria === "camperas") {
-      mensaje = mensaje + `${el.id}-${el.tipo}  $${el.precio} \n`;
+      mensaje += `${el.id}-${el.tipo}  $${el.precio} \n`;
     }
   });
 
-  const opcion = parseInt(prompt(mensaje)); // id del objeto a guardar en el carrito
+  const opcionElegida = parseInt(prompt(mensaje)); // id del objeto a guardar en el carrito
 
-  const productoElegido = Productos.find((producto) => producto.id === opcion);
+  const productoElegido = Productos.find(
+    (producto) => producto.id === opcionElegida
+  );
   agregarACarrito(productoElegido);
 };
 
@@ -245,7 +250,6 @@ const elegirTalle = () => {
     agregarACarrito(talleElegido);
   } else {
     alert("ese talle no esta disponible por el momento");
-    return elegirTalle();
   }
 };
 
@@ -260,10 +264,10 @@ const elegirColor = () => {
     agregarACarrito(colorElegido);
   } else {
     alert("color no disponible por el momento");
-    return elegirColor();
   }
 };
 
+alert("venta por mayor de ropa!");
 let opcion = parseInt(
   prompt(
     "Elige un tipo de prenda: \n 1-remeras \n 2-busos \n 3-camperas \n 4-salir"
@@ -292,8 +296,9 @@ if (opcion === salir) {
       );
       alert("Opción inválida");
   }
-  elegirTalle();
-  elegirColor();
+
   alert("producto cargado correctamente ");
-  mostrarCarrito();
 }
+elegirTalle();
+elegirColor();
+mostrarCarrito();
